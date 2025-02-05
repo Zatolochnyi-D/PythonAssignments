@@ -1,20 +1,18 @@
-# Task 2
+# Program
 def combine_dicts(dicts):
-    # Collect keys of each dict into set to get only unique ones.
-    keys = set()
-    for dict in dicts:
-        for key in dict.keys():
-            keys.add(key)
+    keys = set()                                    # Set to collect distinct keys.
+    for dict in dicts:                              # Go through all given dicts.
+        for key in dict.keys():                     # Go through keys of each dict.
+            keys.add(key)                           # Add key to set (and it's discarded if there is already the same key inside).
 
-    # Create resulting dict by using keys set values as keys and list of corresponding to keys values in dicts as values.
-    result_dict = {}
-    for key in keys:
-        result_dict[key] = []
-        for dict in dicts:
-            try:
+    result_dict = {}                                
+    for key in keys:                                # Go through all the keys.
+        result_dict[key] = []                       # Create list under key in resulting dict.
+        for dict in dicts:                          # Go through all gicen dicts.
+            try:                                    # Add to created ealrier list value under the same key in each dict.
                 result_dict[key].append(dict[key])
-            except KeyError:
-                pass
+            except KeyError:                        # If dict does not have such key, skip.
+                continue
 
     return result_dict
 
@@ -36,4 +34,4 @@ dicts = [
         "2": "number",
     },
 ]
-print(combine_dicts(dicts))
+print(combine_dicts(dicts)) # Expected (in any order): {'1': ['number', 'number'], '2': ['number'], 'b': ['letter', 'letter'], 'd': ['letter'], 'c': ['letter', 'letter'], 'a': ['letter']}
