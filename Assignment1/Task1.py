@@ -1,19 +1,17 @@
-class Notebook:
-    def __init__(self, notes):
-        self.notes = notes
+# Program
+def read_date(dates_dict, date):
+    try:                         # Try get value under "date" key.
+        return dates_dict[date]
+    except (KeyError):           # If there is no such key, return empty list.
+        return []
 
-    def read(self, date):
-        try:
-            return self.notes[date]
-        except (KeyError):
-            return []
-        
+# Demonstration
 notes = {
-    "20.02.2002": ["Something happened"],
-    "21.02.2002": ["Nothing happened", "Absolutely nothing happened"],
-    "22.02.2002": ["Happened nothing", "Happened absolutely nothing"],
+    "23.06.1917": ["I Universal"],
+    "16.07.1917": ["II Universal"],
+    "20.11.1917": ["III Universal"],
+    "22.01.1918": ["IV Universal"],
 }
-    
-notebook = Notebook(notes)
-print(notebook.read("20.02.2002"))
-print(notebook.read("19.02.2002"))
+
+print(read_date(notes, "23.06.1917")) # Expected: ['I Universal']
+print(read_date(notes, "15.04.1984")) # Expected: []
