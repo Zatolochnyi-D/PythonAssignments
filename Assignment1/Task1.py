@@ -1,17 +1,16 @@
-# Program
-def read_date(dates_dict, date):
-    try:                         # Try get value under "date" key.
-        return dates_dict[date]
-    except (KeyError):           # If there is no such key, return empty list.
-        return []
+# Taks 1
+def find_matches(string1, string2):
+    combinations1 = []
+    for i in range(1, len(string1)):
+        combinations1.append(string1[i-1] + string1[i])    # Read every combination of 2 letters from first string.
+    combinations2 = []
+    for i in range(1, len(string2)):
+        combinations2.append(string2[i-1] + string2[i])    # Read every combination of 2 letters from second string.
+    result = []
+    for combination in combinations1:                      # Select every combination that is in both combination lists.
+        if (combination in combinations2):
+            result.append(combination)
+    return result
 
 # Demonstration
-notes = {
-    "23.06.1917": ["I Universal"],
-    "16.07.1917": ["II Universal"],
-    "20.11.1917": ["III Universal"],
-    "22.01.1918": ["IV Universal"],
-}
-
-print(read_date(notes, "23.06.1917")) # Expected: ['I Universal']
-print(read_date(notes, "15.04.1984")) # Expected: []
+print(find_matches("akkad", "drakkar")) # Expected: ['ak', 'kk', 'ka']

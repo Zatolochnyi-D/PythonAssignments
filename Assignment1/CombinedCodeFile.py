@@ -1,64 +1,124 @@
-# Task 1
-def read_date(dates_dict, date):
-    try:                         # Try get value under "date" key.
-        return dates_dict[date]
-    except (KeyError):           # If there is no such key, return empty list.
-        return []
+# Taks 1
+def find_matches(string1, string2):
+    combinations1 = []
+    for i in range(1, len(string1)):
+        combinations1.append(string1[i-1] + string1[i])    # Read every combination of 2 letters from first string.
+    combinations2 = []
+    for i in range(1, len(string2)):
+        combinations2.append(string2[i-1] + string2[i])    # Read every combination of 2 letters from second string.
+    result = []
+    for combination in combinations1:                      # Select every combination that is in both combination lists.
+        if (combination in combinations2):
+            result.append(combination)
+    return result
 
 # Demonstration
-notes = {
-    "23.06.1917": ["I Universal"],
-    "16.07.1917": ["II Universal"],
-    "20.11.1917": ["III Universal"],
-    "22.01.1918": ["IV Universal"],
-}
+print(find_matches("akkad", "drakkar")) # Expected: ['ak', 'kk', 'ka']
 
-print(read_date(notes, "23.06.1917")) # Expected: ['I Universal']
-print(read_date(notes, "15.04.1984")) # Expected: []
 
 # Task 2
-def combine_dicts(dicts):
-    keys = set()                                    # Set to collect distinct keys.
-    for dict in dicts:                              # Go through all given dicts.
-        for key in dict.keys():                     # Go through keys of each dict.
-            keys.add(key)                           # Add key to set (and it's discarded if there is already the same key inside).
-
-    result_dict = {}                                
-    for key in keys:                                # Go through all the keys.
-        result_dict[key] = []                       # Create list under key in resulting dict.
-        for dict in dicts:                          # Go through all gicen dicts.
-            try:                                    # Add to created ealrier list value under the same key in each dict.
-                result_dict[key].append(dict[key])
-            except KeyError:                        # If dict does not have such key, skip.
-                continue
-
-    return result_dict
+def len_of_string(string):
+    counter = 0
+    for letter in string:    # Just increase counter per each iterated symbol.
+        counter += 1
+    return counter
 
 # Demonstration
-dicts = [
-    {
-        "a": "letter",
-        "b": "letter",
-        "c": "letter",
-    },
-    {
-        "b": "letter",
-        "d": "letter",
-        "1": "number",
-    },
-    {
-        "c": "letter",
-        "1": "number",
-        "2": "number",
-    },
-]
-print(combine_dicts(dicts)) # Expected (in any order): {'1': ['number', 'number'], '2': ['number'], 'b': ['letter', 'letter'], 'd': ['letter'], 'c': ['letter', 'letter'], 'a': ['letter']}
+
+print(len_of_string("abcde")) # Expected : 5
+
 
 # Task 3
+def delete_third_elements(list):
+    print(list)                    # Print initial list.
+    counter = 2 % len(list)        # Start counter that will identify index to remove. Start from 2 (third element). Take remaining
+    while (True):                  # if list length is less than 2.
+        del list[counter]
+        print(list)                # Print list with remove element.
+        if (len(list) == 0):       # Stop iteration when list is empty.
+            break
+        counter += 2               # If list is still not empty, increase counter by 3 - 1 to get next third element. Limit by length of list. How it workds:
+        counter %= len(list)       # [1, 2, 3, 1, 2, 3] -> [1, 2, 1, 2, 3]
+                                   #        ↑ pointer     pointer ↑     ↑ next needed element
+
+# Demonstration
+delete_third_elements([1, 2, 3, 4, 5, 6]) # Expected: [1, 2, 3, 4, 5, 6]
+                                          #           [1, 2, 4, 5, 6]
+                                          #           [1, 2, 4, 5]
+                                          #           [1, 2, 5]
+                                          #           [1, 5]
+                                          #           [1]
+                                          #           []
+
+
+# Task 4
+def replace_symbols(string_list, symbol):
+    for string in string_list:              # Stop function if there are words with size less than 3.
+        if (len(string) < 3):
+            return None
+    result_list = []
+    for string in string_list:
+        result = string[:-2]                # For each word in given list, get substring from 0 to 3-from-end symbol.
+        result += symbol * 3                # Add to substring given symbol 3 times.
+        result_list.append(result)
+    return result_list
+
+# Demonstration
+print(replace_symbols(["abcde", "string", "Task4"], "%")) # Expected: ['ab%%%', 'str%%%', 'Ta%%%']
+
+
+# Task 5
+def get_medians(list1, list2):
+    return [list1[1], list2[1]]
+
+# Demonstration
+print(get_medians([1, 2, 3], [4, 5, 6])) # Expected: [2, 5]]
+
+
+# Task 6
+def sum_strings(list):
+    result = 0.0
+    for el in list:
+        result += float(el)
+    return result
+
+# Demonstration
+print(sum_strings(["100", "0.5", "-58.5"])) # Expected: 42.0
+
+
+# Task 7
+def get_students_with_good_marks(students):
+    result = []
+    for student in students:
+        if (student["mark"] > 80):               # Select students with mark higher than 80
+            result.append(student["last name"])  # Get thair last name. Nothing hard.
+    return result
+
+# Demonstration
+students = [
+    {
+        "first name": "Harry",
+        "last name": "Potter",
+        "mark": 79
+    },
+    {
+        "first name": "Hermione",
+        "last name": "Granger",
+        "mark": 90
+    },
+    {
+        "first name": "Ron",
+        "last name": "Weasley",
+        "mark": 70
+    },
+]
+print(get_students_with_good_marks(students)) # Expected: ['Granger']
+
+
 def get_active_names(names):
     result_list = []
-    for dict in names:                       # Go through all the dicts.
-        if dict["status"]:                   # Take dict's name to result list if it's status is True.
+    for dict in names:                       # The same process as in Task 7.
+        if dict["status"]:
             result_list.append(dict["name"])
     return result_list
 
@@ -82,91 +142,3 @@ names = [
     },
 ]
 print(get_active_names(names)) # Expected: ['Arthos', 'Porthos', 'Aramis']
-
-# Task 4
-def form_dict(*args):
-    result_dict = {}
-    for arg in args:                  # Create new key of given argument and set it's value to type of argument.
-        result_dict[arg] = type(arg)
-    return result_dict
-
-# Demonstration
-print(form_dict(3.5, 1, "text", ("more", "text")))
-
-# Task 5
-ua2eng = {
-    "а": "a",
-    "б": "b",
-    "в": "v",
-    "г": "h",
-    "ґ": "g",
-    "д": "d",
-    "е": "e",
-    "є": "ye",
-    "ж": "j",
-    "з": "z",
-    "и": "i",
-    "і": "i",
-    "ї": "yi",
-    "й": "y",
-    "к": "k",
-    "л": "l",
-    "м": "m",
-    "н": "n",
-    "о": "o",
-    "п": "p",
-    "р": "r",
-    "с": "s",
-    "т": "t",
-    "у": "u",
-    "ф": "f",
-    "х": "kh",
-    "ц": "c",
-    "ч": "ch",
-    "ш": "sh",
-    "щ": "shch",
-    "ь": "'",
-    "ю": "yu",
-    "я": "ya"
-}
-eng2ua = {
-    "a": "а",
-    "b": "б",
-    "c": "ц",
-    "d": "в",
-    "e": "е",
-    "f": "ф",
-    "g": "ґ",
-    "h": "г",
-    "i": "і",
-    "j": "ж",
-    "k": "к",
-    "l": "л",
-    "m": "м",
-    "n": "н",
-    "o": "о",
-    "p": "п",
-    "q": "к'ю",
-    "r": "р",
-    "s": "с",
-    "t": "т",
-    "u": "у",
-    "v": "в",
-    "w": "в",
-    "x": "кс",
-    "y": "й",
-    "z": "з",
-}
-
-def transliterate(table, string):
-    result = ""                                      # String to put transliterated characters in.
-    for char in string:                              # Go through each character in provided word.
-        transliterated = table[char.lower()]         # Get corresponding transliterated character.
-        if char.isupper():                           # Convert transliterated character to upper case, if original character was in upper case.
-            transliterated = transliterated.upper()
-        result += transliterated                     # Append transliterated character to string.
-    return result
-        
-# Demonstration
-print(transliterate(ua2eng, "Паляниця")) # Expected: Palyanicya
-print(transliterate(eng2ua, "Program")) # Expected: Проґрам
