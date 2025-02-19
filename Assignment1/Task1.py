@@ -10,7 +10,7 @@ def find_matches(string1, string2):
     for combination in combinations1:                      # Select every combination that is in both combination lists.
         if (combination in combinations2):
             result.append(combination)
-    return result
+    return len(result)
 
 # Demonstration
-print(find_matches("akkad", "drakkar")) # Expected: ['ak', 'kk', 'ka']
+print(find_matches("akkad", "drakkar")) # Expected: 3
