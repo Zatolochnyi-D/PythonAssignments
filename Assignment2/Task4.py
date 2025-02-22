@@ -1,9 +1,6 @@
 # Task 4
-def combine_lists(*lists):
-    return [el for list in lists for el in list]  # For each list for each it's element return element.
+def select_odds_in_range(begin, end):
+    return [x for x in range(begin, end + 1) if x % 2 == 1]
 
 # Demonstration
-lst1 = ['a', 'b']
-lst2 = ['c', 'd']
-lst3 = ['e', 'f']
-print(combine_lists(lst1, lst2, lst3)) # Expected: ['a', 'b', 'c', 'd', 'e', 'f']
+print(select_odds_in_range(3, 9)) # Expected: [3, 5, 7, 9]
